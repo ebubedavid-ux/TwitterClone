@@ -4,6 +4,8 @@ dotenv.config({
   path: "../.env",
 });
 const databaseConnection = () => {
+  console.log("MONGO_URI:", process.env.MONGO_URI);
+
   mongoose
     .connect(process.env.MONGO_URI)
     .then(() => {
