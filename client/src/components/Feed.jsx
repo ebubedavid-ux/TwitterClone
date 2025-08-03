@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import CreatePost from "./CreatePost";
 import { Plus } from "lucide-react";
 import Tweet from "./Tweet";
@@ -11,6 +11,26 @@ const Feed = () => {
   const { user } = useContext(UserContext);
   const { tweets, setTweets, isActive, setIsActive } = useContext(TweetContext);
   const navigate = useNavigate();
+
+   const fetchTweets = async () => {
+      try {
+        const res = await axios.get(
+          isActive
+            ? `${TWEET_API_END_POINT}/alltweet/${user._id}`
+            : `${TWEET_API_END_POINT}/followingtweet/${user._id}`,
+          { withCredentials: true }
+        );
+        setTweets(res.data.tweets);
+        
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+     useEffect(() => {
+        fetchTweets();
+       
+      }, []);
 
  return (
   <div className="w-full max-w-[600px] mx-auto px-4">
@@ -74,6 +94,7 @@ const Feed = () => {
         user={user}
         setTweets={setTweets}
         isActive={isActive}
+         disableAutoFetch={false} 
       />
     ))}
 

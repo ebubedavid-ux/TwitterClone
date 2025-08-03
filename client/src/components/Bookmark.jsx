@@ -42,6 +42,7 @@ const BookmarkPage = () => {
           user={user}
           setTweets={setBookmarkedTweets}
           isActive={false}
+          disableAutoFetch={true}
         />
       ))}
     </div>
